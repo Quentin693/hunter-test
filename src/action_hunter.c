@@ -7,6 +7,24 @@
 
 #include "../my.h"
 
+void animate_fish(game_t *game, sfEvent event, play_t *play, fish_t *fish)
+{
+    if (sfTime_asSeconds(sfClock_getElapsedTime(game->cl_game)) > 0.05) {
+        if (fish->it_fish.left == 1494) {
+            fish->it_fish.left = 0;
+        } else {
+            fish->it_fish.left += 498;
+        }
+        fish->y -= 50;
+        fish->pos_fish = (sfVector2f){fish->x, fish->y};
+        sfSprite_setPosition(fish->spt_fish, fish->pos_fish);
+        sfSprite_setTextureRect(fish->spt_fish, fish->it_fish);
+        sfClock_restart(game->cl_game);
+        if (fish->y < -130)
+            game->is_hit = 3;
+    }
+}
+
 void kill_fish(game_t *game, sfEvent event, play_t *play, fish_t *fish)
 {
     if (game->is_hit == 1) {
@@ -26,23 +44,6 @@ void kill_fish(game_t *game, sfEvent event, play_t *play, fish_t *fish)
     }
 }
 
-void animate_fish(game_t *game, sfEvent event, play_t *play, fish_t *fish)
-{
-    if (sfTime_asSeconds(sfClock_getElapsedTime(game->cl_game)) > 0.05) {
-        if (fish->it_fish.left == 1494) {
-            fish->it_fish.left = 0;
-        } else {
-            fish->it_fish.left += 498;
-        }
-        fish->y -= 50;
-        fish->pos_fish = (sfVector2f){fish->x, fish->y};
-        sfSprite_setPosition(fish->spt_fish, fish->pos_fish);
-        sfSprite_setTextureRect(fish->spt_fish, fish->it_fish);
-        sfClock_restart(game->cl_game);
-        if (fish->y < -130)
-            game->is_hit = 3;
-    }
-}
 
 void hit_fish(game_t *game, sfEvent event, fish_t *fish)
 {

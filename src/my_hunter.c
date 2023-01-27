@@ -50,8 +50,9 @@ int presentation(void)
     return 0;
 }
 
-int main(sfEvent event, int argc, char **argv)
+int main(int argc, char **argv)
 {
+    sfEvent event; 
     if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h')
         return presentation();
     menu_t *menu = malloc(sizeof(menu_t));
